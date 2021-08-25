@@ -59,3 +59,7 @@ Push Content in the GIT Repo
 2. Create a DotNet Core specific .gitignore file by using :- dotnet new gitignore . This will contain all the necessary file exclusions
 3. Clone the directory.
 4. Review the files and add them to staging area and commit and push
+
+Create a Feature Branch For Development
+---------------------------------------
+1. Create a Feature Branch for Development
