@@ -1,3 +1,4 @@
+import { List, ListItem } from "semantic-ui-react";
 import { Activity } from "../Entities/Activity";
 
 interface Props{
@@ -7,11 +8,11 @@ interface Props{
 function Activities({activities}:Props){
     return(
         <div>
-            {activities.length>0?<ul>
+            {activities.length>0?<List>
                 {activities.map(act=>(
-                    <li>{act.title}</li>
+                    <ListItem>{act.title}</ListItem>
                 ))}
-            </ul>:<h4>No activities present</h4>
+            </List>:<h4>No activities present</h4>
             }
         </div>
     )

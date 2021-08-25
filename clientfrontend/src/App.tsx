@@ -1,28 +1,28 @@
-import React,{useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Activities from './Activities/Activities';
 import './App.css';
+import { Header } from 'semantic-ui-react';
 
 function App() {
-  const [activities,setActivities]=useState([]);
+  const [activities, setActivities] = useState([]);
 
-  useEffect(()=>{
-    axios.get("http://localhost:5000/api/activities").then(resp=>{
+  useEffect(() => {
+    axios.get("http://localhost:5000/api/activities").then(resp => {
       console.log("Got activities response");
-      if(resp){
+      if (resp) {
         setActivities(resp.data);
       }
-    }).catch(err=>{
+    }).catch(err => {
       console.log("Encountered error while quierying activities");
       console.log(err);
     })
-  },[]);
+  }, []);
   return (
     <div>
-      <header>
-        <h3>Reactivities</h3>
-        <Activities activities={activities} />
-      </header>
+      <Header as="h2" icon="users" content="Reactivities" />
+      
+      <Activities activities={activities} />
     </div>
   );
 }
