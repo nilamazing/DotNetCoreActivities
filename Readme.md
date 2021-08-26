@@ -63,3 +63,29 @@ Push Content in the GIT Repo
 Create a Feature Branch For Development
 ---------------------------------------
 1. Create a Feature Branch for Development
+
+
+Client Front End
+-------------------
+1. Create React project with Typescript template
+   npx create-react-app clientfrontend -template typescript
+2. Create tsx files to encapsulate Component code. Use Interface pattern to define Props and enable strict type checking in 
+   the parent component . E.g. :- Apps and Activities Components
+3. Introduce React Semantic UI package. Steps to integrate the same :-
+   i) npm install semantic-ui-react semantic-ui-css
+   ii) import 'semantic-ui-css/semantic.min.css' in "index.tsx" file.
+
+
+Create Mediator Service Pattern
+--------------------------------
+In order to achive Clean Architecture Pattern and CQRS (Command Response Segregation) we will need to implement the "Mediator" Pattern.
+With this pattern, the Controller layer will forward the request for processing to the concerned Mediator Handler Layer
+residing in the Business Layer. The Mediator Handler Layer will be injected via the Service DI Layer on Application Startup.
+Steps :-
+1. Add "MediatR.Extensions.Microsoft.DependencyInjection" Nuget package in "Applications" and "API" projects.
+2. Create the Mediator Layer in "Applications" Project.
+3. Rewrite the code in Controller Layer to forward the request to the Mediator Handler using the Query Pattern (IRequest marker Interface).
+4. Inject the MediatR assembly in the "Startup.cs" file in the ConfigureServices method.
+5. In the BaseAPIController file get the Injected MediatorService from the Service Deependency and the singleton will serve as
+   the Mediator for all the controllers. 
+   protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
