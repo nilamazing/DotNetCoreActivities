@@ -15,6 +15,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Persistence;
+using AutoMapper;
+using Applications.Core;
 
 namespace API
 {
@@ -46,14 +48,19 @@ namespace API
             );
 
             // Inject CORS Policy
-            services.AddCors(opt=>{
-                opt.AddPolicy("DefaultCorsPolicy",policy=>{
+            services.AddCors(opt =>
+            {
+                opt.AddPolicy("DefaultCorsPolicy", policy =>
+                {
                     policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000");
                 });
             });
-            
+
             // Inject Mediator Assembly
             services.AddMediatR(typeof(List.Handler).Assembly);
+
+            // Inject AutoMapper
+            services.AddAutoMapper(typeof(MappingProfiles).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

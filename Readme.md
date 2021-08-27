@@ -89,3 +89,16 @@ Steps :-
 5. In the BaseAPIController file get the Injected MediatorService from the Service Deependency and the singleton will serve as
    the Mediator for all the controllers. 
    protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
+
+Create CRUD Functionalities in ActivityController and implement AutoMapper
+--------------------------------------------------------------------------
+Created CRUD functionality in Activity Controller by implementing :-
+1. CreateActivity - Create Activity Endpoint
+2. EditActivity - Edit Activity Endpoint
+3. DeleteActivity - Delete Activity Endpoint
+
+Also created AutoMapper Service through the following :- 
+1. Injected Dependency of AutoMapper Assembly in ConfigureServices method of StartUp.cs :-
+   services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+2. Created MappingProfiles class in Application Layer.
+3. Injected IMapper dependency in MediatR layer and invoking Map method. 
