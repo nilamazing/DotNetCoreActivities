@@ -1,0 +1,11 @@
+div.list{
+    margin-left: 80px !important;
+}
+
+.ui.menu.fixed .item:first-child {
+    margin-left: 10%;
+}
+
+div.segment{
+   margin-left: 10% !important;
+  }
