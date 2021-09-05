@@ -33,14 +33,14 @@ Set Up Dotnet Ef Tool
 1. Use command "dotnet tool list --global" to list global tools.
 2. Check if "dotnet-ef" tool is installed globally.
 3. Use command "dotnet ef migrations add <name> -p <Project where DBContext is (Persistence in our case)> -s <Startup Project (API inour case)>
-4. The above command will 
+4. The above command will create the 
 Set Up Domain And DB Context and DI Layer
 -----------------------------------------
 1. Create a Domain class "Activity" in Domain Class Lib. This class will be the target DB Class using the EF Migration Strategy
 2. Create a DataContext class extending the DBContext base class to create a session with DB and create query and save entities with DB.
 3. In "Startup.cs" class of "API" WebAPI inject the DBContext class (DataContext) in ConfigureServices method. Use SQLite as the DB     provider and use DefaultConnection Connection string. 
 4. Configure connection string in "appsettings.Development.json" file.
-5. Create Service Provider Scope and use Service Locator Pattern to locate "DataContext" DBContext class injected in "Startup.cs" file mentioned above.
+5. Create Service Provider Scope and use Service Locator Pattern to locate "DataContext" DBContext class injected in "Startup.cs" file mentioned above in Program.cs file.
 6. Retrieve the Database from context and run any pending Migrations on the DB.
 
 Create a Seed Class to inject data into the Database

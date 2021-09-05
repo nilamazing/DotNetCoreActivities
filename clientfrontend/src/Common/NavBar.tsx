@@ -1,6 +1,9 @@
 import { Button, Menu, MenuItem } from "semantic-ui-react";
 
-export function NavBar() {
+interface Props{
+    enableCreateForm(createForm:Boolean):void;
+}
+export function NavBar({enableCreateForm}:Props) {
     return (
         <Menu inverted fixed="top">
             <MenuItem>
@@ -8,7 +11,7 @@ export function NavBar() {
             </MenuItem>
             <MenuItem name="Activities"></MenuItem>
             <MenuItem>
-                <Button positive>Create Activity</Button>
+                <Button positive content="Create Activity" onClick={()=>enableCreateForm(true)}></Button>
             </MenuItem>
         </Menu>
     );

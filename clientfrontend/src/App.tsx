@@ -9,10 +9,13 @@ import ActivityDashboard from './Activities/ActivityDashboard';
 
 function App() {
   const [activities, setActivities] = useState<Activity[]>([]);
+  const [isDisplayCreateForm,setIsDisplayCreateForm]=useState<{state:boolean}>({state:false});
 
+  function enableCreateFormToggle(createForm:boolean){
+    setIsDisplayCreateForm({state:createForm});
+  }
   useEffect(() => {
     axios.get<Activity[]>("http://localhost:5000/api/activities").then(resp => {
-      console.log("Got activities response");
       if (resp) {
         setActivities(resp.data);
       }
@@ -23,9 +26,9 @@ function App() {
   }, []);
   return (
     <div>
-      <NavBar></NavBar>
+      <NavBar enableCreateForm={enableCreateFormToggle}></NavBar>
       <Container style={{marginTop: '7em'}}></Container>
-      <ActivityDashboard activities={activities} />
+      <ActivityDashboard  activities={activities} createActivityMode={isDisplayCreateForm} />
     </div>
   );
 }
