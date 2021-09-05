@@ -23,6 +23,9 @@ function App() {
 
   useEffect(() => {
     ActivitiesAPI.list().then(resp => {
+      resp.map(act=>{
+        act.date=act.date.split('T')[0];
+      });
       setActivities(resp);
       setIsLoading(false);
     }).catch(err => {
