@@ -1,4 +1,3 @@
-import { create } from "domain";
 import { useEffect, useState } from "react";
 import { Grid, Segment } from "semantic-ui-react";
 import { Activity } from "../Entities/Activity";
@@ -9,9 +8,10 @@ import ActivityForm from "./ActivityForm";
 interface Props {
     activities: Activity[];
     createActivityMode: {state:boolean};
+    deleteActvity(string):void;
 }
 
-export default function ActivityDashboard({ activities, createActivityMode }: Props) {
+export default function ActivityDashboard({ activities, createActivityMode, deleteActvity }: Props) {
     const [activity, setActivity] = useState<Activity>(null as any);
     const [isDisplayForm, setIsDisplayForm] = useState<boolean>(false);
 
@@ -31,7 +31,10 @@ export default function ActivityDashboard({ activities, createActivityMode }: Pr
             setActivity(activitiesMatched[0]);
         }
     }
-
+   
+    function activityItemDeleted(itemId: string) {
+        deleteActvity(itemId);
+    }
 
     useEffect(()=>{
         console.log("In ActivityDashboard useEffect");
@@ -42,7 +45,7 @@ export default function ActivityDashboard({ activities, createActivityMode }: Pr
         <Grid>
             <Grid.Row>
                 <Grid.Column width={9}>
-                    <Activities onActivityClicked={activityItemClicked} activities={activities}></Activities>
+                    <Activities onActivityClicked={activityItemClicked} activities={activities} onActivityDeleted={activityItemDeleted}></Activities>
                 </Grid.Column>
                 <Grid.Column width={3}>
                     {activity !== null && !isDisplayForm && <ActivityDetail activityDetailCancelled={() => setActivity(null as any)} activityDetail={activity}></ActivityDetail>}

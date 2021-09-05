@@ -5,6 +5,7 @@ import './Activities.css';
 interface Props{
     activities: Activity[];
     onActivityClicked(activityId:string):void;
+    onActivityDeleted(activityId:string):void;
 }
 
 function Activities(props:Props){
@@ -12,6 +13,9 @@ function Activities(props:Props){
     console.log("In onCategoryDetailInitiated method");
     props.onActivityClicked(activityId);
    }
+   function onActivityDetailDeleted(activityId:string){
+    props.onActivityDeleted(activityId);
+  }
     return(
         <Segment>
             {props.activities.length>0?<ItemGroup divided>
@@ -27,6 +31,7 @@ function Activities(props:Props){
                             <Item.Extra>
                                 <Label>{act.category}</Label>
                                 <Button floated="right" content="View" color="blue" onClick={()=>onCategoryDetailInitiated(act.id)}></Button>
+                                <Button floated="right" content="Delete" color="red" onClick={()=>onActivityDetailDeleted(act.id)}></Button>
                             </Item.Extra>
                         </Item.Content>
                     </Item>
