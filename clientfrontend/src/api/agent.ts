@@ -28,7 +28,10 @@ const requests={
 }
 
 const ActivitiesAPI={
-    list:()=>requests.get<Activity[]>('/activities')
+    list:()=>requests.get<Activity[]>('/activities'),
+    edit:(activityId,activityItem)=>requests.put<Activity>(`/activities/${activityId}`,activityItem),
+    delete:(activityId)=>requests.delete<Activity>(`/activities/${activityId}`),
+    create:(activityItem:Activity)=>requests.post<Activity>('/activities',activityItem)
 }
 
 export default ActivitiesAPI;

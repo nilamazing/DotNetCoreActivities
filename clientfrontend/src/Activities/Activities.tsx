@@ -1,4 +1,5 @@
 import { ItemGroup, Segment, Item, Label, Button } from "semantic-ui-react";
+import ActivitiesAPI from "../api/agent";
 import { Activity } from "../Entities/Activity";
 import './Activities.css';
 
@@ -14,7 +15,13 @@ function Activities(props:Props){
     props.onActivityClicked(activityId);
    }
    function onActivityDetailDeleted(activityId:string){
-    props.onActivityDeleted(activityId);
+       ActivitiesAPI.delete(activityId).then(delResp=>{
+        props.onActivityDeleted(activityId);
+       }).catch(err=>{
+           console.log("Error occured while deleting activity");
+           console.log(err);
+       })
+    
   }
     return(
         <Segment>

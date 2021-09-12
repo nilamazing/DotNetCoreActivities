@@ -18,7 +18,14 @@ function App() {
   }
 
   function deleteActivityItem(itemId: string) {
-    setActivities(activities.filter(act => { return act.id !== itemId }));
+    console.log("In App.tsx");
+    console.log(itemId);
+    setActivities(prevState=>{
+      let newActs = prevState.filter(act=>act.id!==itemId);
+      console.log("New Activities");
+      console.log(newActs);
+      return [...newActs];
+    });
   }
 
   useEffect(() => {

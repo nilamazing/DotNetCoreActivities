@@ -74,6 +74,9 @@ Client Front End
 3. Introduce React Semantic UI package. Steps to integrate the same :-
    i) npm install semantic-ui-react semantic-ui-css
    ii) import 'semantic-ui-css/semantic.min.css' in "index.tsx" file.
+4. Created an API Helper file containing the CRUD operation using Generics Data Type. Core operations are exposed and promise is       returned.
+5. Created a delay functionality to mimic actual REST API call and demonstrate the Loader functionality.
+6. Installed "uuid" npm package to create random Activity Id while creating entities. In case issues appear with Typescript, please follow the suggestion provided by VS Code Wizard and install the Typescript types definition file.
 
 
 Create Mediator Service Pattern

@@ -7,11 +7,18 @@ import ActivityForm from "./ActivityForm";
 interface Props {
     activityDetail: Activity
     activityDetailCancelled():void;
+    onActivityDetailUpdated(activity:Activity):void;
 }
 
-export default function ActivityDetail({ activityDetail,activityDetailCancelled}: Props) {
+export default function ActivityDetail({ activityDetail,activityDetailCancelled, onActivityDetailUpdated}: Props) {
     const [isDisplayForm, setIsDisplayForm] = useState<Boolean>(false);
+    const [activity, setActivity] = useState<Activity>(activityDetail);
 
+    function onActivityItemUpdationSucceeded(activityUpdated:Activity){
+        setIsDisplayForm(false);
+        setActivity(activityUpdated);
+        onActivityDetailUpdated(activityUpdated);
+    }
     function setDisplayFormView(displayForm: Boolean) {
         setIsDisplayForm(displayForm);
     }
@@ -20,15 +27,15 @@ export default function ActivityDetail({ activityDetail,activityDetailCancelled}
         <div>
             {!isDisplayForm?
             <Card fluid>
-                <Image src={`/assets/categoryImages/${activityDetail.category}.jpg`} wrapped ui={false} />
+                <Image src={`/assets/categoryImages/${activity.category}.jpg`} wrapped ui={false} />
                 <Card.Content>
-                    <Card.Header>{activityDetail.title}</Card.Header>
+                    <Card.Header>{activity.title}</Card.Header>
                     <Card.Meta>
-                        <span className='date'>{activityDetail.date}</span>
+                        <span className='date'>{activity.date}</span>
                     </Card.Meta>
                     <Card.Description>
-                        <div>{activityDetail.description}</div>
-                        <div>{activityDetail.city} {activityDetail.venue}</div>
+                        <div>{activity.description}</div>
+                        <div>{activity.city} {activity.venue}</div>
                     </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
@@ -38,7 +45,7 @@ export default function ActivityDetail({ activityDetail,activityDetailCancelled}
                     </Button.Group>
                 </Card.Content>
             </Card>:
-            <ActivityForm cancelFormMode={setDisplayFormView} activityDetail={activityDetail}></ActivityForm>
+            <ActivityForm cancelFormMode={setDisplayFormView} activityDetail={activity} onActivityUpdated={onActivityItemUpdationSucceeded}></ActivityForm>
             }
         </div>
     )
