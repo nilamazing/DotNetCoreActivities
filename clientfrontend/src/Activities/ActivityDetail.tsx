@@ -1,52 +1,56 @@
+import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import { Card, Label, Image, ButtonGroup, Button } from "semantic-ui-react";
 import { Activity } from "../Entities/Activity";
+import { useStore } from "../stores/store";
 import './ActivityDetail.css';
 import ActivityForm from "./ActivityForm";
 
-interface Props {
-    activityDetail: Activity
-    activityDetailCancelled():void;
-    onActivityDetailUpdated(activity:Activity):void;
-}
+// interface Props {
+//     activityDetail: Activity
+//     activityDetailCancelled():void;
+//     onActivityDetailUpdated(activity:Activity):void;
+// }
 
-export default function ActivityDetail({ activityDetail,activityDetailCancelled, onActivityDetailUpdated}: Props) {
-    const [isDisplayForm, setIsDisplayForm] = useState<Boolean>(false);
-    const [activity, setActivity] = useState<Activity>(activityDetail);
-
+function ActivityDetail() {
+    //const [isDisplayForm, setIsDisplayForm] = useState<Boolean>(false);
+    //const [activity, setActivity] = useState<Activity>(activityDetail);
+    const {activityStore} = useStore();
     function onActivityItemUpdationSucceeded(activityUpdated:Activity){
-        setIsDisplayForm(false);
-        setActivity(activityUpdated);
-        onActivityDetailUpdated(activityUpdated);
+        activityStore.setIsDisplayCreateForm(false);
+        activityStore.setActivity(activityUpdated);
+        //onActivityDetailUpdated(activityUpdated);
     }
-    function setDisplayFormView(displayForm: Boolean) {
-        setIsDisplayForm(displayForm);
+    function setDisplayFormView(displayForm: boolean) {
+        activityStore.setIsDisplayCreateForm(displayForm);
     }
 
     return (
         <div>
-            {!isDisplayForm?
+            {!activityStore.isDisplayCreateForm?
             <Card fluid>
-                <Image src={`/assets/categoryImages/${activity.category}.jpg`} wrapped ui={false} />
+                <Image src={`/assets/categoryImages/${activityStore.activity.category}.jpg`} wrapped ui={false} />
                 <Card.Content>
-                    <Card.Header>{activity.title}</Card.Header>
+                    <Card.Header>{activityStore.activity.title}</Card.Header>
                     <Card.Meta>
-                        <span className='date'>{activity.date}</span>
+                        <span className='date'>{activityStore.activity.date}</span>
                     </Card.Meta>
                     <Card.Description>
-                        <div>{activity.description}</div>
-                        <div>{activity.city} {activity.venue}</div>
+                        <div>{activityStore.activity.description}</div>
+                        <div>{activityStore.activity.city} {activityStore.activity.venue}</div>
                     </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
                     <Button.Group widths='2'>
-                        <Button basic color="blue" content='Edit' onClick={() => setDisplayFormView(true)}></Button>
-                        <Button basic color="grey" content='Cancel' onClick={() => activityDetailCancelled()}></Button>
+                        <Button basic color="blue" content='Edit' onClick={() => activityStore.setIsDisplayCreateForm(true)}></Button>
+                        <Button basic color="grey" content='Cancel' onClick={() => activityStore.setActivity(null)}></Button>
                     </Button.Group>
                 </Card.Content>
             </Card>:
-            <ActivityForm cancelFormMode={setDisplayFormView} activityDetail={activity} onActivityUpdated={onActivityItemUpdationSucceeded}></ActivityForm>
+            // <ActivityForm cancelFormMode={setDisplayFormView} activityDetail={activityStore.activity} onActivityUpdated={onActivityItemUpdationSucceeded}></ActivityForm>
+            <ActivityForm></ActivityForm>
             }
         </div>
     )
 }
+export default observer(ActivityDetail);

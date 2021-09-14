@@ -1,9 +1,13 @@
+import { observer } from "mobx-react-lite";
 import { Button, Menu, MenuItem } from "semantic-ui-react";
+import { useStore } from "../stores/store";
 
-interface Props{
-    enableCreateForm(createForm:Boolean):void;
-}
-export function NavBar({enableCreateForm}:Props) {
+function NavBar() {
+    const {activityStore}=useStore();
+    function initiateCreateForm(){
+        activityStore.setIsDisplayCreateForm(true);
+        activityStore.setActivity(null);
+    }
     return (
         <Menu inverted fixed="top">
             <MenuItem>
@@ -11,9 +15,10 @@ export function NavBar({enableCreateForm}:Props) {
             </MenuItem>
             <MenuItem name="Activities"></MenuItem>
             <MenuItem>
-                <Button positive content="Create Activity" onClick={()=>enableCreateForm(true)}></Button>
+                <Button positive content="Create Activity" onClick={initiateCreateForm}></Button>
             </MenuItem>
         </Menu>
     );
-
 }
+
+export default observer(NavBar);

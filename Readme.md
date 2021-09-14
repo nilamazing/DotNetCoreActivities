@@ -78,6 +78,20 @@ Client Front End
 5. Created a delay functionality to mimic actual REST API call and demonstrate the Loader functionality.
 6. Installed "uuid" npm package to create random Activity Id while creating entities. In case issues appear with Typescript, please follow the suggestion provided by VS Code Wizard and install the Typescript types definition file.
 
+Install Central State Management Using Mobx
+-------------------------------------------
+1. In "clientfrontend" use :- npm i mobx mobx-react-lite
+2. Create an ActivityStore which contains the following observables :- activities,activity,isDisplayCreateForm and isLoading.
+3. Also create the Action methods.
+4. Create the store interface which consists o fall the observables and create a context of the store (createContext).
+5. Create the useContext wrapper.
+6. Go to index.tsx file and wrap App component inside the following node :-
+    <StoreContext.Provider value={store}>
+        <App />
+    </StoreContext.Provider>
+    This will inject the StoreContext to the Root Component and all its child component heirarchy.
+4. Refactor the components to now use observor and use the context of the store mentioned in Step 5. above to use the observables and the actions.
+
 
 Create Mediator Service Pattern
 --------------------------------

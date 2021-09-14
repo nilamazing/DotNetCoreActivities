@@ -1,22 +1,29 @@
+import { observer } from "mobx-react-lite";
 import { ItemGroup, Segment, Item, Label, Button } from "semantic-ui-react";
 import ActivitiesAPI from "../api/agent";
 import { Activity } from "../Entities/Activity";
+import { useStore } from "../stores/store";
 import './Activities.css';
 
-interface Props{
-    activities: Activity[];
-    onActivityClicked(activityId:string):void;
-    onActivityDeleted(activityId:string):void;
-}
+// interface Props{
+//     activities: Activity[];
+//     onActivityClicked(activityId:string):void;
+//     onActivityDeleted(activityId:string):void;
+// }
 
-function Activities(props:Props){
-   function onCategoryDetailInitiated(activityId:string){
+function Activities(){
+   const {activityStore}=useStore();
+
+   function onCategoryDetailInitiated(activityClicked:Activity){
     console.log("In onCategoryDetailInitiated method");
-    props.onActivityClicked(activityId);
+    activityStore.setIsDisplayCreateForm(false);
+    activityStore.setActivity(activityClicked);
+    //props.onActivityClicked(activityId);
    }
-   function onActivityDetailDeleted(activityId:string){
-       ActivitiesAPI.delete(activityId).then(delResp=>{
-        props.onActivityDeleted(activityId);
+   function onActivityDetailDeleted(activity:Activity){
+       ActivitiesAPI.delete(activity.id).then(delResp=>{
+        activityStore.deleteActivity(activity);
+        //props.onActivityDeleted(activityId);
        }).catch(err=>{
            console.log("Error occured while deleting activity");
            console.log(err);
@@ -25,8 +32,8 @@ function Activities(props:Props){
   }
     return(
         <Segment>
-            {props.activities.length>0?<ItemGroup divided>
-                {props.activities.map(act=>(
+            {activityStore.activities.length>0?<ItemGroup divided>
+                {activityStore.activities.map(act=>(
                     <Item key={act.id}>
                         <Item.Content>
                             <Item.Header>{act.title}</Item.Header>
@@ -37,8 +44,8 @@ function Activities(props:Props){
                             </Item.Description>
                             <Item.Extra>
                                 <Label>{act.category}</Label>
-                                <Button floated="right" content="View" color="blue" onClick={()=>onCategoryDetailInitiated(act.id)}></Button>
-                                <Button floated="right" content="Delete" color="red" onClick={()=>onActivityDetailDeleted(act.id)}></Button>
+                                <Button floated="right" content="View" color="blue" onClick={()=>onCategoryDetailInitiated(act)}></Button>
+                                <Button floated="right" content="Delete" color="red" onClick={()=>onActivityDetailDeleted(act)}></Button>
                             </Item.Extra>
                         </Item.Content>
                     </Item>
@@ -48,4 +55,4 @@ function Activities(props:Props){
         </Segment>
     )
 }
-export default Activities;
+export default observer(Activities);
