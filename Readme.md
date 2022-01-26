@@ -1,5 +1,5 @@
 This Project is used to create .Net Core API with React Front End.
-
+Testing on 26-01-2021
 Plugins/Extensions
 --------------------
 1. C# - Syntax highlighting, editing, intellisense and Debug
